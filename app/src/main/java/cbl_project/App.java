@@ -4,12 +4,11 @@
 
 package cbl_project;
 
+
 public class App {
-    public String getGreeting() {
-        return "Hello World! TEST1!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        GameplayController gameplayController = new GameplayController();
+        gameplayController.startGame();
     }
 }
