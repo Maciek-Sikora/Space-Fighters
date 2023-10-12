@@ -8,11 +8,14 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
-    final int screenWidth = 3840;
-    final int screenHeight = 2160;
+    final int screenWidth = 1920*2/3;
+    final int screenHeight = 1080*2/3;
 
     int FPS = 60;
+
+    KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+    Menu menu = new Menu(this, keyH);
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -52,7 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if(timer >= 1e9){
-                System.out.println(drawCount);
+                System.out.println("[INFO] Running FPS="+drawCount);
                 drawCount =0;
                 timer = 0;
             }
@@ -65,9 +68,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D)g;
+        menu.draw(g2);
 
-
+        g2.dispose();
     }
 }
