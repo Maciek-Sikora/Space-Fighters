@@ -16,11 +16,15 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     Menu menu = new Menu(this, keyH);
+    PlayerRed playerRed = new PlayerRed(this, keyH);
+    PlayerYellow playerYellow = new PlayerYellow(this, keyH);
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
+        this.addKeyListener(keyH);
+        this.setFocusable(true);
 
     }
     public void startGameThread(){
@@ -64,13 +68,15 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update(){
-
+        playerRed.update();
+        playerYellow.update();
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         menu.draw(g2);
-
+        playerRed.draw(g2);
+        playerYellow.draw(g2);
         g2.dispose();
     }
 }

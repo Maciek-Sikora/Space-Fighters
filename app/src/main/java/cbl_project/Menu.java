@@ -11,6 +11,8 @@ public class Menu {
     GamePanel gp;
     KeyHandler keyH;
     BufferedImage backgroundImage = null;
+    int width = 300;
+    int height = 250;
 
     public Menu(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -22,7 +24,7 @@ public class Menu {
             // backgroundImage = ImageIO.read(new FileInputStream("templates/space.png"));
             backgroundImage = ImageIO.read(getClass().getResourceAsStream("/space.png"));
             
-            System.out.println("Menu templates downloaded succesfuly");
+            System.out.println("[INFO] Menu templates downloaded succesfuly");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -33,7 +35,9 @@ public class Menu {
         
     }
     void draw(Graphics2D g2){
-        g2.drawImage(backgroundImage, 0,0, gp.getWidth(),gp.getHeight(),null);
+        width = gp.getWidth();
+        height = gp.getHeight();
+        g2.drawImage(backgroundImage, 0,0, width, height,null);
     }
 
 }
