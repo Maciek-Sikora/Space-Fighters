@@ -14,10 +14,15 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
 
     KeyHandler keyH = new KeyHandler();
+    Collider collider = new Collider();
+    ProjectilesController projectilesController = new ProjectilesController(this, keyH, collider);
     Thread gameThread;
     Menu menu = new Menu(this, keyH);
-    PlayerRed playerRed = new PlayerRed(this, keyH);
-    PlayerYellow playerYellow = new PlayerYellow(this, keyH);
+    
+    PlayerRed playerRed = new PlayerRed(this, keyH, projectilesController, collider);
+    PlayerYellow playerYellow = new PlayerYellow(this, keyH, projectilesController, collider);
+    
+    
 
     int spaceBetweenBordersRatio = 7;
     int spaceBetweenBorders = screenWidth/spaceBetweenBordersRatio;
@@ -75,6 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
         spaceBetweenBorders = this.getWidth()/spaceBetweenBordersRatio;
         playerRed.update();
         playerYellow.update();
+        projectilesController.updateProjectiles();
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -82,6 +88,7 @@ public class GamePanel extends JPanel implements Runnable {
         menu.draw(g2);
         playerRed.draw(g2);
         playerYellow.draw(g2);
+        projectilesController.drawProjectiles(g2);
         g2.dispose();
     }
 }

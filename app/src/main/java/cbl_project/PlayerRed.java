@@ -21,11 +21,17 @@ public class PlayerRed {
     int x= 300;
     int y= 250;
     int speed = 5;
+    int id =1;
+    ProjectilesController projectilesController;
+    Collider collider;
+    int hp = 100;
 
-    public PlayerRed(GamePanel gp, KeyHandler keyH) {
+
+    public PlayerRed(GamePanel gp, KeyHandler keyH, ProjectilesController projectilesController, Collider collider) {
         this.gp = gp;
         this.keyH = keyH;
-        
+        this.projectilesController = projectilesController;
+        this.collider = collider;
         setUp();
     }
 
@@ -51,6 +57,9 @@ public class PlayerRed {
             System.out.println("[ERROR] Image load failure!");
         }
     }
+    void checkColision(){
+        collider.checkBulletCoolision(this);
+    }
     void update(){
         if(keyH.w && y - speed >=0){
             y -= speed;
@@ -64,11 +73,23 @@ public class PlayerRed {
         if(keyH.d && x + speed + width + 10 < gp.getWidth()/2 - gp.spaceBetweenBorders){
             x+=speed;
         }
+
+        if(keyH.leftShift){
+            projectilesController.addBullet(gp, keyH, x + width, y + height/2 - 10, 90, id);
+            keyH.leftShift = false;
+        }
+        if(keyH.leftCtr){
+
+        }
+
+        checkColision();
     }
     void draw(Graphics2D g2){
         width = gp.getWidth()/15;
         height = gp.getHeight()/15;
         g2.drawImage(playerSpirit, x,y, width,height,null);
+        // g2.drawRect(x, y, width, height);
+
     } 
 
 }

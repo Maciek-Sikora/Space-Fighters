@@ -7,7 +7,10 @@ public class KeyHandler implements KeyListener{
 
     // Check if key is pressed:
     public boolean w,s,a,d;
+    public boolean leftCtr, leftShift;
     public boolean up,down, left, right;
+    public boolean rightCtr, rightShift;
+
     @Override
     public void keyTyped(KeyEvent e){
 
@@ -41,6 +44,25 @@ public class KeyHandler implements KeyListener{
             left = true;
         }
 
+
+        if(code == KeyEvent.VK_SHIFT){
+            if(e.getKeyLocation() == 2){
+                leftShift = true;
+            } 
+            if(e.getKeyLocation() == 3){
+                rightShift = true;
+            }
+        }
+
+        if(code == KeyEvent.VK_CONTROL){
+            if(e.getKeyLocation() == 2){
+                leftCtr = true;
+            } 
+            if(e.getKeyLocation() == 3){
+                rightCtr = true;
+            }
+        }
+
     }
     @Override
     public void keyReleased(KeyEvent e){
@@ -71,5 +93,24 @@ public class KeyHandler implements KeyListener{
         if(code == KeyEvent.VK_LEFT){
             left = false;
         }
+
+        if(code == KeyEvent.VK_SHIFT){
+            if(e.getKeyLocation() == 2){
+                leftShift = false;
+            } 
+            if(e.getKeyLocation() == 3){
+                rightShift = false;
+            }
+        }
+
+        if(code == KeyEvent.VK_CONTROL){
+            if(e.getKeyLocation() == 2){
+                leftCtr = false;
+            } 
+            if(e.getKeyLocation() == 3){
+                rightCtr = false;
+            }
+        }
+        
     }
 }

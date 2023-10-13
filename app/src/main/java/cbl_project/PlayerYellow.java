@@ -21,11 +21,18 @@ public class PlayerYellow {
     int x= 1000;
     int y= 300;
     int speed = 5;
+    int id =2;
+    
+    ProjectilesController projectilesController;
+    Collider collider;
 
-    public PlayerYellow(GamePanel gp, KeyHandler keyH) {
+    int hp = 100;
+
+    public PlayerYellow(GamePanel gp, KeyHandler keyH, ProjectilesController projectilesController, Collider collider) {
         this.gp = gp;
         this.keyH = keyH;
-        
+        this.collider = collider;
+        this.projectilesController = projectilesController;
         setUp();
     }
 
@@ -51,6 +58,9 @@ public class PlayerYellow {
             System.out.println("[ERROR] Image load failure!");
         }
     }
+    void checkColision(){
+        collider.checkBulletCoolision(this);
+    }
     void update(){
         if(keyH.up && y - speed >=0){
             y -= speed;
@@ -64,7 +74,18 @@ public class PlayerYellow {
         if(keyH.left && x - speed > gp.getWidth()/2 + gp.spaceBetweenBorders){
             x-=speed;
         }
+
+        if(keyH.rightShift){
+            projectilesController.addBullet(gp, keyH, x, y + height/2 - 10, 270, id);
+            keyH.rightShift = false;
+        }
+        if(keyH.rightCtr){
+
+        }
+        checkColision();
     }
+    
+
     void draw(Graphics2D g2){
         width = gp.getWidth()/15;
         height = gp.getHeight()/15;
