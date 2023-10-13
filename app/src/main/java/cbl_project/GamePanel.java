@@ -19,6 +19,10 @@ public class GamePanel extends JPanel implements Runnable {
     PlayerRed playerRed = new PlayerRed(this, keyH);
     PlayerYellow playerYellow = new PlayerYellow(this, keyH);
 
+    int spaceBetweenBordersRatio = 7;
+    int spaceBetweenBorders = screenWidth/spaceBetweenBordersRatio;
+
+    
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -68,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update(){
+        spaceBetweenBorders = this.getWidth()/spaceBetweenBordersRatio;
         playerRed.update();
         playerYellow.update();
     }

@@ -16,9 +16,9 @@ public class PlayerYellow {
     KeyHandler keyH;
     BufferedImage playerSpirit = null;
     Graphics2D playerGraphic;
-    int width = 300;
-    int height = 250;
-    int x= 300;
+    int width;
+    int height;
+    int x= 1000;
     int y= 300;
     int speed = 5;
 
@@ -52,16 +52,16 @@ public class PlayerYellow {
         }
     }
     void update(){
-        if(keyH.up){
+        if(keyH.up && y - speed >=0){
             y -= speed;
         }
-        if(keyH.down){
+        if(keyH.down && y + speed + height < gp.getHeight()){
             y+=speed;
         }
-        if(keyH.right){
+        if(keyH.right && x + speed + width < gp.getWidth()){
             x += speed;
         }
-        if(keyH.left){
+        if(keyH.left && x - speed > gp.getWidth()/2 + gp.spaceBetweenBorders){
             x-=speed;
         }
     }
