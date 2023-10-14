@@ -15,16 +15,15 @@ public class Bullet {
     GamePanel gp;
     KeyHandler keyH;
     BufferedImage[] bulletsSpirits = new BufferedImage[4];
-    int width = 10;
-    int height = 17;
-    int x, xOffset;
-    int y, yOffset;
+    double yOffset, xOffset;
+    int x,y;
     int speed = 5;
     int angle;
     int spiritCounter=0;
     int spiritNumber =0;
     int ownerId;
-
+    int width = 10;
+    int height = 10;
     public Bullet(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart, int ownerId) {
         this.gp = gp;
         this.keyH = keyH;
@@ -64,10 +63,10 @@ public class Bullet {
         }
     }
     void update(){
-        xOffset = (int) Math.sin(Math.toRadians(angle))*speed;
-        yOffset = (int) Math.cos(Math.toRadians(angle))*speed;
+        xOffset = Math.sin(Math.toRadians(angle))*speed;
+        yOffset = Math.cos(Math.toRadians(angle))*speed;
         x += xOffset;
-        y += yOffset;
+        y -= yOffset;
 
         spiritCounter++;
         if(spiritCounter>10){
