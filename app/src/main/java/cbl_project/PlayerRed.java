@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import java.awt.Rectangle;
+import java.awt.Color;
 
 
 public class PlayerRed {
@@ -25,6 +27,9 @@ public class PlayerRed {
     ProjectilesController projectilesController;
     Collider collider;
     int hp = 100;
+    Rectangle leftHpRectangle;
+    Rectangle rightHpRectangle;
+
 
 
     public PlayerRed(GamePanel gp, KeyHandler keyH, ProjectilesController projectilesController, Collider collider) {
@@ -60,7 +65,8 @@ public class PlayerRed {
     void checkColision(){
         collider.checkBulletCoolision(this);
     }
-    void update(){
+
+    void movement(){
         if(keyH.w && y - speed >=0){
             y -= speed;
         }
@@ -81,13 +87,29 @@ public class PlayerRed {
         if(keyH.leftCtr){
 
         }
-
+    }
+    void hpBar(){
+        leftHpRectangle = new Rectangle(x, y + height + 5, width * hp/100, height/20);
+        rightHpRectangle= new Rectangle(x + width * hp/100, y + height  + 5, width - ( width * hp/100 ), height/20);
+    }
+    void update(){
+        movement();
+        hpBar();
         checkColision();
     }
     void draw(Graphics2D g2){
         width = gp.getWidth()/15;
         height = gp.getHeight()/15;
         g2.drawImage(playerSpirit, x,y, width,height,null);
+        if(hp != 0){
+            g2.setColor(Color.GREEN);
+            g2.draw(leftHpRectangle);
+        }
+        if(hp != 100){
+            g2.setColor(Color.RED);
+            g2.draw(rightHpRectangle);
+        }
+        
         // g2.drawRect(x, y, width, height);
 
     } 
