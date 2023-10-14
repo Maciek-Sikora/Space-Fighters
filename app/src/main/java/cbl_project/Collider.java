@@ -9,8 +9,7 @@ import java.util.List;
 public class Collider {
     List<Bullet> bullets;
     Bullet bullet;
-    // TODO: DEL
-    Graphics2D g2;
+
 
     void checkBulletCoolision(PlayerRed playerRed){
         int i =0;
@@ -20,8 +19,9 @@ public class Collider {
                 i++;
                 continue;
             }
-            Rectangle bulletRectangle = new Rectangle(bullet.x, bullet.y, bullet.x + bullet.width, bullet.y + bullet.height);
-            Rectangle playerRectangle = new Rectangle(playerRed.x, playerRed.y, playerRed.x + playerRed.width ,playerRed.y + playerRed.height);
+            // TODO: Change for tilted rectangles for Angles
+            Rectangle bulletRectangle = new Rectangle(bullet.x, bullet.y, bullet.width, bullet.height);
+            Rectangle playerRectangle = new Rectangle(playerRed.x, playerRed.y, playerRed.width , playerRed.height);
             if(bulletRectangle.intersects(playerRectangle)){
                 bullets.remove(i);
                 continue;
@@ -38,8 +38,8 @@ public class Collider {
                 i++;
                 continue;
             }
-            Rectangle bulletRectangle = new Rectangle(bullet.x, bullet.y, bullet.x + bullet.width, bullet.y + bullet.height);
-            Rectangle playerRectangle = new Rectangle(playerYellow.x,playerYellow.y,playerYellow.x + playerYellow.width ,playerYellow.y + playerYellow.height);
+            Rectangle bulletRectangle = new Rectangle(bullet.x, bullet.y, bullet.width, bullet.height);
+            Rectangle playerRectangle = new Rectangle(playerYellow.x,playerYellow.y,playerYellow.width , playerYellow.height);
             if(bulletRectangle.intersects(playerRectangle)){
                 bullets.remove(i);
                 continue;

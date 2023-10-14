@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
-
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 
@@ -15,11 +15,10 @@ public class Bullet {
     GamePanel gp;
     KeyHandler keyH;
     BufferedImage[] bulletsSpirits = new BufferedImage[4];
-
     int width = 10;
     int height = 17;
-    int x;
-    int y;
+    int x, xOffset;
+    int y, yOffset;
     int speed = 5;
     int angle;
     int spiritCounter=0;
@@ -65,8 +64,10 @@ public class Bullet {
         }
     }
     void update(){
-        x += Math.sin(Math.toRadians(angle))*speed;
-        y += Math.cos(Math.toRadians(angle))*speed;
+        xOffset = (int) Math.sin(Math.toRadians(angle))*speed;
+        yOffset = (int) Math.cos(Math.toRadians(angle))*speed;
+        x += xOffset;
+        y += yOffset;
 
         spiritCounter++;
         if(spiritCounter>10){
