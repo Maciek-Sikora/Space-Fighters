@@ -72,9 +72,9 @@ public class RocketToRed {
         return Math.toDegrees(Math.atan2(yDiff, xDiff));
     }
     void update(){
-        Point.Double p1 = new Point.Double(x,-y);
-        Point.Double p2 = new Point.Double(gp.playerRed.x, -gp.playerRed.y);
-        double tilt = 90 - getAngleOfLineBetweenTwoPoints(p1, p2);
+        Point.Double p1 = new Point.Double(-x,y);
+        Point.Double p2 = new Point.Double(-gp.playerRed.x, gp.playerRed.y);
+        double tilt = 270 - getAngleOfLineBetweenTwoPoints(p1, p2);
         double tiltDiff = tilt - angle;
 
         if(Math.abs(tiltDiff ) < maxTiltAngle){
