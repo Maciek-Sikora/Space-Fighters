@@ -11,7 +11,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.Rectangle;
 import java.awt.Color;
 
-public class PlayerRed {
+public class Opponent {
 
     GamePanel gp;
     KeyHandler keyH;
@@ -20,20 +20,23 @@ public class PlayerRed {
     int width;
     int height;
     int x = 300;
-    int y = 250;
-    int speed = 5;
+    int y = -50;
+    int speed = 1;
     int id = 1;
     ProjectilesController projectilesController;
     Collider collider;
-    int hp = 100;
+    int hp = 40;
     Rectangle leftHpRectangle;
     Rectangle rightHpRectangle;
+    int timer = 0;
 
-    public PlayerRed(GamePanel gp, KeyHandler keyH, ProjectilesController projectilesController, Collider collider) {
+    public Opponent(GamePanel gp, KeyHandler keyH, ProjectilesController projectilesController, Collider collider) {
         this.gp = gp;
         this.keyH = keyH;
         this.projectilesController = projectilesController;
         this.collider = collider;
+        x = gp.getWidth() /2 - width/2;
+
         setUp();
     }
 
@@ -49,10 +52,10 @@ public class PlayerRed {
 
     void setUp() {
         try {
-            playerSpirit = ImageIO.read(getClass().getResourceAsStream("/spaceship_red.png"));
-            playerSpirit = rotateImage(playerSpirit, 270);
+            playerSpirit = ImageIO.read(getClass().getResourceAsStream("/opponentShip1.png"));
+            playerSpirit = rotateImage(playerSpirit, 180);
 
-            System.out.println("[INFO] Player templates downloaded succesfuly");
+            System.out.println("[INFO] Opponent templates downloaded succesfuly");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -60,44 +63,30 @@ public class PlayerRed {
         }
     }
 
-    void checkColision() {
-        collider.checkBulletCoolision(this);
-        collider.checkRocketCoolisionRed();
-    }
+    
 
     void movement() {
-        if (keyH.w && y - speed >= 0) {
-            y -= speed;
-        }
-        if (keyH.s && y + speed + height < gp.getHeight()) {
-            y += speed;
-        }
-        if (keyH.a && x - speed > 0) {
-            x -= speed;
-        }
-        if (keyH.d && x + speed + width + 10 < gp.getWidth() / 2 - gp.spaceBetweenBorders) {
-            x += speed;
-        }
-
-        if (keyH.leftShift) {
-            projectilesController.addBullet(gp, keyH, x + width, y + height / 2 - 10, 90, id);
-            keyH.leftShift = false;
-        }
-        if (keyH.leftCtr) {
-            projectilesController.redLaunchRocket(gp, keyH, x + width, y + height / 2 - 10, 90);
-            keyH.leftCtr = false;
-        }
+        x = gp.getWidth() /2 - width/2;
+        y += speed;
     }
 
     void hpBar() {
-        leftHpRectangle = new Rectangle(x, y + height + 5, width * hp / 100, height / 20);
-        rightHpRectangle = new Rectangle(x + width * hp / 100, y + height + 5, width - (width * hp / 100), height / 20);
+        leftHpRectangle = new Rectangle(x, y + height + 5, width * hp / 40, height / 20);
+        rightHpRectangle = new Rectangle(x + width * hp / 40, y + height + 5, width - (width * hp / 40), height / 20);
+        
+        
     }
 
     void update() {
         movement();
         hpBar();
-        checkColision();
+
+        if(timer == 200){
+            timer=0;
+            projectilesController.redLaunchRocket(gp, keyH, x,y + height/2,270);
+            projectilesController.yellowLaunchRocket(gp, keyH, x + width, y + height/2, 90);
+        }
+        timer++;
     }
 
     void draw(Graphics2D g2) {
@@ -108,7 +97,7 @@ public class PlayerRed {
             g2.setColor(Color.GREEN);
             g2.draw(leftHpRectangle);
         }
-        if (hp != 100) {
+        if (hp != 40) {
             g2.setColor(Color.RED);
             g2.draw(rightHpRectangle);
         }

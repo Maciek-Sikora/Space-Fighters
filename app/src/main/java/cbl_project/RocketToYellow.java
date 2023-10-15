@@ -32,6 +32,8 @@ public class RocketToYellow {
     double maxTiltAngle =5;
     int speed = 5;
 
+    int rocketDetonationDist = 100;
+
     public RocketToYellow(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart) {
         this.gp = gp;
         this.keyH = keyH;

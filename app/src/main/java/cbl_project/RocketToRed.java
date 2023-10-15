@@ -28,6 +28,7 @@ public class RocketToRed {
     int spiritNumber =0;
     int speed = 5;
     double maxTiltAngle = 5;
+    int rocketDetonationDist = 100;
 
 
     public RocketToRed(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart) {

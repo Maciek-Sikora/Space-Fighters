@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -12,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenHeight = 1080*2/3;
 
     int FPS = 60;
-
+    List<Opponent> opponents = new ArrayList<Opponent>();;
     KeyHandler keyH = new KeyHandler();
     Collider collider = new Collider();
     ProjectilesController projectilesController = new ProjectilesController(this, keyH, collider);
@@ -22,13 +24,14 @@ public class GamePanel extends JPanel implements Runnable {
     PlayerRed playerRed = new PlayerRed(this, keyH, projectilesController, collider);
     PlayerYellow playerYellow = new PlayerYellow(this, keyH, projectilesController, collider);
     
-    
+    long opponentTimer = 0;
 
     int spaceBetweenBordersRatio = 7;
     int spaceBetweenBorders = screenWidth/spaceBetweenBordersRatio;
 
     
     public GamePanel(){
+        collider.gp = this;
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -36,10 +39,34 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
 
     }
+    void spawnOpponents(){
+        if(opponentTimer>1000){
+            System.out.println("P");
+            this.opponents.add(new Opponent(this, keyH, projectilesController, collider));
+            opponentTimer = 0;
+        }
+        opponentTimer++;
+        if(opponents.size() == 0){
+            opponentTimer+=2;
+        }
+    }
+    void opponentsUpdate(){
+        for(Opponent opponent: opponents){
+            opponent.update();
+        }
+    }
+    void opponentsDraw(Graphics2D g2){
+        for(Opponent opponent: opponents){
+            opponent.draw(g2);
+        }
+    }
+
+
     public void startGameThread(){
         gameThread = new Thread(this);
         gameThread.start();
     }
+    
     @Override
     public void run(){
         double drawInterval = 1e9 / FPS;
@@ -78,8 +105,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update(){
         spaceBetweenBorders = this.getWidth()/spaceBetweenBordersRatio;
+
         playerRed.update();
         playerYellow.update();
+        spawnOpponents();
+        opponentsUpdate();
         projectilesController.updateProjectiles();
     }
     
@@ -90,6 +120,7 @@ public class GamePanel extends JPanel implements Runnable {
         menu.draw(g2);
         playerRed.draw(g2);
         playerYellow.draw(g2);
+        opponentsDraw(g2);
         projectilesController.drawProjectiles(g2);
         g2.dispose();
     }

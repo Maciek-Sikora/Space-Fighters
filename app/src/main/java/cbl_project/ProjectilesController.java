@@ -12,11 +12,14 @@ public class ProjectilesController {
     GamePanel gp;
     KeyHandler keyH;
     Collider collider;
+    
 
     public ProjectilesController(GamePanel gp, KeyHandler keyH, Collider collider) {
         this.gp = gp;
         this.keyH = keyH;
         collider.bullets = this.bullets;
+        collider.rocketsToYellow = this.rocketsToYellow;
+        collider.rocketsToRed = this.rocketsToRed;
         this.collider = collider;
     }
 

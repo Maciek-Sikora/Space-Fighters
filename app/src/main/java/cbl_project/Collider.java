@@ -3,12 +3,18 @@ package cbl_project;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Collider {
     List<Bullet> bullets;
+    List<RocketToYellow> rocketsToYellow;
+    List<RocketToRed> rocketsToRed;
+    GamePanel gp;
     Bullet bullet;
+    RocketToRed rocketToRed;
+    RocketToYellow rocketToYellow;
 
 
     void checkBulletCoolision(PlayerRed playerRed){
@@ -44,6 +50,44 @@ public class Collider {
             if(bulletRectangle.intersects(playerRectangle)){
                 bullets.remove(i);
                 playerYellow.hp -= 10;
+                continue;
+            }
+            i++;
+        }
+    }
+
+    void checkRocketCoolisionRed(){
+        int i =0;
+        int dist = 0;
+        while(i< rocketsToRed.size()){
+            rocketToRed = rocketsToRed.get(i);
+            double x1 = rocketToRed.x;
+            double y1 = rocketToRed.y;
+            double x2 = gp.playerRed.x + gp.playerRed.width/2;
+            double y2 = gp.playerRed.y + gp.playerRed.height/2;
+            dist = (int)Point2D.distance(x1,y1,x2,y2);
+            if(dist<rocketToRed.rocketDetonationDist){
+                rocketsToRed.remove(i);
+                gp.playerRed.hp -= 10;
+                continue;
+            }
+            i++;
+        }
+    }
+
+    void checkRocketCoolisionYellow(){
+        int i =0;
+        int dist = 0;
+        while(i< rocketsToYellow.size()){
+            rocketToYellow = rocketsToYellow.get(i);
+            double x1 = rocketToYellow.x;
+            double y1 = rocketToYellow.y;
+            double x2 = gp.playerYellow.x + gp.playerYellow.width/2;
+            double y2 = gp.playerYellow.y + gp.playerYellow.height/2;
+            dist = (int)Point2D.distance(x1,y1,x2,y2);
+            if(dist<rocketToYellow.rocketDetonationDist){
+                rocketsToYellow.remove(i);
+                gp.playerYellow.hp -= 10;
                 continue;
             }
             i++;
