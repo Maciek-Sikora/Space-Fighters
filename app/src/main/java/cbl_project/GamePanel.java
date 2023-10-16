@@ -16,10 +16,11 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
     List<Opponent> opponents = new ArrayList<Opponent>();;
     KeyHandler keyH = new KeyHandler();
+    MouseHandler mouseHandler = new MouseHandler();
     Collider collider = new Collider();
     ProjectilesController projectilesController = new ProjectilesController(this, keyH, collider);
     Thread gameThread;
-    Menu menu = new Menu(this, keyH);
+    Menu menu = new Menu(this, keyH, mouseHandler);
     
     PlayerRed playerRed = new PlayerRed(this, keyH, projectilesController, collider);
     PlayerYellow playerYellow = new PlayerYellow(this, keyH, projectilesController, collider);
@@ -28,6 +29,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     int spaceBetweenBordersRatio = 7;
     int spaceBetweenBorders = screenWidth/spaceBetweenBordersRatio;
+    
+    enum GameState {
+        MENU,
+        GAME
+    }
+
+    GameState gameState = GameState.MENU;
 
     
     public GamePanel(){
@@ -37,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+        this.addMouseListener(mouseHandler);
 
     }
     void spawnOpponents(){
@@ -105,12 +114,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update(){
         spaceBetweenBorders = this.getWidth()/spaceBetweenBordersRatio;
-
-        playerRed.update();
-        playerYellow.update();
-        spawnOpponents();
-        opponentsUpdate();
-        projectilesController.updateProjectiles();
+        if (gameState == GameState.MENU) {
+            menu.update();
+        } else if (gameState == GameState.GAME) {
+            playerRed.update();
+            playerYellow.update();
+            spawnOpponents();
+            opponentsUpdate();
+            projectilesController.updateProjectiles();
+        }
     }
     
     @Override
@@ -118,10 +130,14 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         menu.draw(g2);
-        playerRed.draw(g2);
-        playerYellow.draw(g2);
-        opponentsDraw(g2);
-        projectilesController.drawProjectiles(g2);
+        if (gameState == GameState.MENU) {
+            menu.drawStartMenu(g2);
+        } else if (gameState == GameState.GAME) {
+            playerRed.draw(g2);
+            playerYellow.draw(g2);
+            opponentsDraw(g2);
+            projectilesController.drawProjectiles(g2);
+        }
         g2.dispose();
     }
 }
