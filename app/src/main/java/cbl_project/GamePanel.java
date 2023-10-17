@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenHeight = 1080*2/3;
 
     int FPS = 60;
-    List<Opponent> opponents = new ArrayList<Opponent>();;
+    List<Opponent> opponents = new ArrayList<Opponent>();
     KeyHandler keyH = new KeyHandler();
     MouseHandler mouseHandler = new MouseHandler();
     Collider collider = new Collider();
@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     
     enum GameState {
         MENU,
+        HELP,
         GAME
     }
 
@@ -114,7 +115,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update(){
         spaceBetweenBorders = this.getWidth()/spaceBetweenBordersRatio;
-        if (gameState == GameState.MENU) {
+        if (gameState == GameState.MENU || gameState == GameState.HELP) {
             menu.update();
         } else if (gameState == GameState.GAME) {
             playerRed.update();
@@ -132,6 +133,8 @@ public class GamePanel extends JPanel implements Runnable {
         menu.draw(g2);
         if (gameState == GameState.MENU) {
             menu.drawStartMenu(g2);
+        } else if (gameState == GameState.HELP) {
+            menu.drawHelpMenu(g2);
         } else if (gameState == GameState.GAME) {
             playerRed.draw(g2);
             playerYellow.draw(g2);
