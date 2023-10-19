@@ -29,17 +29,19 @@ public class RocketToYellow {
     int spiritCounter=0;
     int spiritNumber =0;
     
-    double maxTiltAngle =5;
+    double maxTiltAngle =0.3;
     int speed = 5;
+    int ownerId = 1;
 
     int rocketDetonationDist = 100;
 
-    public RocketToYellow(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart) {
+    public RocketToYellow(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart, int ownerId) {
         this.gp = gp;
         this.keyH = keyH;
         x = xStart;
         y = yStart;
         angle = angleStart;
+        this.ownerId = ownerId;
         setUp();
     }
 

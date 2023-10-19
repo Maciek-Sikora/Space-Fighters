@@ -84,7 +84,7 @@ public class PlayerRed {
             keyH.leftShift = false;
         }
         if (keyH.leftCtr) {
-            projectilesController.redLaunchRocket(gp, keyH, x + width, y + height / 2 - 10, 90);
+            projectilesController.redLaunchRocket(gp, keyH, x + width, y + height / 2 - 10, 90, 1);
             keyH.leftCtr = false;
         }
     }

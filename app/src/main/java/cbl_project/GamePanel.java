@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenHeight = 1080*2/3;
 
     int FPS = 60;
-    List<Opponent> opponents = new ArrayList<Opponent>();
+    List<Opponent> opponents = new ArrayList<Opponent>();;
     KeyHandler keyH = new KeyHandler();
     MouseHandler mouseHandler = new MouseHandler();
     Collider collider = new Collider();
@@ -29,10 +29,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     int spaceBetweenBordersRatio = 7;
     int spaceBetweenBorders = screenWidth/spaceBetweenBordersRatio;
+    int idCounter = 2;
     
     enum GameState {
         MENU,
-        HELP,
         GAME
     }
 
@@ -52,17 +52,29 @@ public class GamePanel extends JPanel implements Runnable {
     void spawnOpponents(){
         if(opponentTimer>1000){
             System.out.println("P");
-            this.opponents.add(new Opponent(this, keyH, projectilesController, collider));
+            this.opponents.add(new Opponent(this, keyH, projectilesController, collider,idCounter));
             opponentTimer = 0;
+            idCounter+=1;
         }
         opponentTimer++;
         if(opponents.size() == 0){
             opponentTimer+=2;
         }
     }
+    void deleteOpponent(Opponent opponent){
+        for(int i =0; i < opponents.size(); i++){
+            if(opponents.get(i) == opponent){
+                opponents.remove(i);
+                break;
+            }
+        }
+    }
+
     void opponentsUpdate(){
-        for(Opponent opponent: opponents){
-            opponent.update();
+        int i =0;
+        while(i<opponents.size()){
+            opponents.get(i).update();
+            i++;
         }
     }
     void opponentsDraw(Graphics2D g2){
@@ -115,7 +127,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update(){
         spaceBetweenBorders = this.getWidth()/spaceBetweenBordersRatio;
-        if (gameState == GameState.MENU || gameState == GameState.HELP) {
+        if (gameState == GameState.MENU) {
             menu.update();
         } else if (gameState == GameState.GAME) {
             playerRed.update();
@@ -133,8 +145,6 @@ public class GamePanel extends JPanel implements Runnable {
         menu.draw(g2);
         if (gameState == GameState.MENU) {
             menu.drawStartMenu(g2);
-        } else if (gameState == GameState.HELP) {
-            menu.drawHelpMenu(g2);
         } else if (gameState == GameState.GAME) {
             playerRed.draw(g2);
             playerYellow.draw(g2);

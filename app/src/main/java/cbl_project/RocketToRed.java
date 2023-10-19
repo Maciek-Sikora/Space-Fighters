@@ -27,16 +27,17 @@ public class RocketToRed {
     int spiritCounter=0;
     int spiritNumber =0;
     int speed = 5;
-    double maxTiltAngle = 5;
+    double maxTiltAngle = 0.3;
     int rocketDetonationDist = 100;
+    int ownerId;
 
-
-    public RocketToRed(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart) {
+    public RocketToRed(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart, int ownerId) {
         this.gp = gp;
         this.keyH = keyH;
         this.x = xStart;
         this.y = yStart;
         this.angle = angleStart;
+        this.ownerId = ownerId;
         setUp();
     }
 

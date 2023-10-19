@@ -27,12 +27,12 @@ public class ProjectilesController {
         bullets.add(new Bullet(gp, keyH, xStart, yStart, angleStart, ownerId));
     }
 
-    void redLaunchRocket(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart) {
-        rocketsToYellow.add(new RocketToYellow(gp, keyH, xStart, yStart, angleStart));
+    void redLaunchRocket(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart, int owner) {
+        rocketsToYellow.add(new RocketToYellow(gp, keyH, xStart, yStart, angleStart, owner));
     }
 
-    void yellowLaunchRocket(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart) {
-        rocketsToRed.add(new RocketToRed(this.gp, this.keyH, xStart, yStart, angleStart));
+    void yellowLaunchRocket(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart, int owner) {
+        rocketsToRed.add(new RocketToRed(this.gp, this.keyH, xStart, yStart, angleStart, owner));
     }
 
     void updateProjectiles() {

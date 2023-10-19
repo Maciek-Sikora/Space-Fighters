@@ -93,4 +93,87 @@ public class Collider {
             i++;
         }
     }
+    void checkOpponentBulletCollisioN(Opponent opponent){
+        int i =0;
+        while(i< bullets.size()){
+            bullet = bullets.get(i);
+            if(bullet.ownerId == opponent.id){
+                i++;
+                continue;
+            }
+            Rectangle bulletRectangle = new Rectangle(bullet.x, bullet.y, bullet.width, bullet.height);
+            Rectangle playerRectangle = new Rectangle(opponent.x,opponent.y,opponent.width , opponent.height);
+            if(bulletRectangle.intersects(playerRectangle)){
+                bullets.remove(i);
+                opponent.hp -= 10;
+                if(opponent.hp<=0){
+                    gp.deleteOpponent(opponent);
+                    return;
+                }
+                continue;
+            }
+            i++;
+        }
+    }
+    void checkOpponentCoolisionRocketsToYellow(Opponent opponent){
+        int i =0;
+        int dist = 0;
+        while(i< rocketsToYellow.size()){
+            rocketToYellow = rocketsToYellow.get(i);
+             if(rocketToYellow.ownerId == opponent.id){
+                i++;
+                continue;
+            }
+            double x1 = rocketToYellow.x;
+            double y1 = rocketToYellow.y;
+            double x2 = opponent.x + opponent.width/2;
+            double y2 = opponent.y + opponent.height/2;
+            dist = (int)Point2D.distance(x1,y1,x2,y2);
+            if(dist<rocketToYellow.rocketDetonationDist){
+                rocketsToYellow.remove(i);
+                opponent.hp -= 20;
+                if(opponent.hp<=0){
+                    gp.deleteOpponent(opponent);
+                    return;
+                }
+                continue;
+            }
+            i++;
+        }
+
+    }
+    void checkOpponentCoolisionRocketsToRed(Opponent opponent){
+        int i =0;
+        int dist = 0;
+        while(i< rocketsToRed.size()){
+            rocketToRed = rocketsToRed.get(i);
+            if(rocketToRed.ownerId == opponent.id){
+                i++;
+                continue;
+            }
+            double x1 = rocketToRed.x;
+            double y1 = rocketToRed.y;
+            double x2 = opponent.x + opponent.width/2;
+            double y2 = opponent.y + opponent.height/2;
+            dist = (int)Point2D.distance(x1,y1,x2,y2);
+            if(dist<rocketToRed.rocketDetonationDist){
+                rocketsToRed.remove(i);
+                opponent.hp -= 20;
+                if(opponent.hp<=0){
+                    gp.deleteOpponent(opponent);
+                    return;
+                }
+                continue;
+            }
+            i++;
+        }
+    }
+    void checkOpponentCollision(Opponent opponent){
+        
+        checkOpponentBulletCollisioN(opponent);
+        checkOpponentCoolisionRocketsToRed(opponent);
+        checkOpponentCoolisionRocketsToYellow(opponent);
+        
+        
+    }
 }

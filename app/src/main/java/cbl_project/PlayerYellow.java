@@ -86,7 +86,7 @@ public class PlayerYellow {
             keyH.rightShift = false;
         }
         if (keyH.rightCtr) {
-            projectilesController.yellowLaunchRocket(gp, keyH, x, y + height / 2 - 10, 270);
+            projectilesController.yellowLaunchRocket(gp, keyH, x, y + height / 2 - 10, 270,2);
             keyH.rightCtr = false;
         }
     }

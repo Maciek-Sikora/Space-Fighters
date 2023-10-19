@@ -1,15 +1,15 @@
 package cbl_project;
 
 import javax.imageio.ImageIO;
-import java.awt.Graphics2D;
+
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.awt.Rectangle;
-import java.awt.Color;
+import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class Opponent {
 
@@ -30,13 +30,13 @@ public class Opponent {
     Rectangle rightHpRectangle;
     int timer = 0;
 
-    public Opponent(GamePanel gp, KeyHandler keyH, ProjectilesController projectilesController, Collider collider) {
+    public Opponent(GamePanel gp, KeyHandler keyH, ProjectilesController projectilesController, Collider collider, int id) {
         this.gp = gp;
         this.keyH = keyH;
         this.projectilesController = projectilesController;
         this.collider = collider;
         x = gp.getWidth() /2 - width/2;
-
+        this.id = id;
         setUp();
     }
 
@@ -76,20 +76,55 @@ public class Opponent {
         
         
     }
-
-    void update() {
-        movement();
-        hpBar();
+    void checkColision(){
+        collider.checkOpponentCollision(this);
+        if(hp<=0) return;
+    }
+    public static double getAngleOfLineBetweenTwoPoints(Point.Double p1, Point.Double p2)
+    {
+        double xDiff = p2.x - p1.x;
+        double yDiff = p2.y - p1.y;
+        return Math.toDegrees(Math.atan2(yDiff, xDiff));
+    }
+    void launchRockets(){
+        if(timer == 100){
+            projectilesController.addBullet(gp, keyH, x, y, 90, id);
+            projectilesController.addBullet(gp, keyH, x, y, 270, id);
+        }
 
         if(timer == 200){
             timer=0;
-            projectilesController.redLaunchRocket(gp, keyH, x,y + height/2,270);
-            projectilesController.yellowLaunchRocket(gp, keyH, x + width, y + height/2, 90);
+
+            Point.Double p1 = new Point.Double(x,-y);
+            Point.Double p2 = new Point.Double(gp.playerYellow.x, -gp.playerYellow.y);
+            double tilt = 90 - getAngleOfLineBetweenTwoPoints(p1, p2);
+            projectilesController.redLaunchRocket(gp, keyH, x + width,y + height/2,(int)tilt,id);
+
+            p1 = new Point.Double(-x,y);
+            p2 = new Point.Double(-gp.playerRed.x, gp.playerRed.y);
+            tilt = 270 - getAngleOfLineBetweenTwoPoints(p1, p2);
+            projectilesController.yellowLaunchRocket(gp, keyH, x , y + height/2, (int) tilt,id);
         }
         timer++;
     }
+    void deleteChecker(){
+        if(y >= gp.getHeight()){
+            gp.deleteOpponent(this);
+        }
+    }
+    void update() {
+        movement();
+        hpBar();
+        checkColision();
+        if(hp<=0) return;
+
+        launchRockets();
+        deleteChecker();
+
+    }
 
     void draw(Graphics2D g2) {
+        if(hp<=0) return;
         width = gp.getWidth() / 15;
         height = gp.getHeight() / 15;
         g2.drawImage(playerSpirit, x, y, width, height, null);
