@@ -1,6 +1,9 @@
 package cbl_project;
 
 import javax.imageio.ImageIO;
+
+import cbl_project.GamePanel.GameState;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -25,9 +28,9 @@ public class PlayerRed {
     int id = 1;
     ProjectilesController projectilesController;
     Collider collider;
-    int hp = 100;
-    Rectangle leftHpRectangle;
-    Rectangle rightHpRectangle;
+    int hp = 100;    
+    Rectangle leftHpRectangle = new Rectangle();
+    Rectangle rightHpRectangle = new Rectangle();
 
     public PlayerRed(GamePanel gp, KeyHandler keyH, ProjectilesController projectilesController, Collider collider) {
         this.gp = gp;
@@ -95,7 +98,12 @@ public class PlayerRed {
     }
 
     void update() {
-        movement();
+        movement();        
+        if (hp < 0) {
+            hp = 0;
+            gp.gameState = GameState.END;
+            gp.winner = "Yellow";
+        }
         hpBar();
         checkColision();
     }

@@ -12,35 +12,48 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel implements Runnable {
     final int screenWidth = 1920*2/3;
     final int screenHeight = 1080*2/3;
+    
 
     int FPS = 60;
-    List<Opponent> opponents = new ArrayList<Opponent>();;
     KeyHandler keyH = new KeyHandler();
     MouseHandler mouseHandler = new MouseHandler();
-    Collider collider = new Collider();
-    ProjectilesController projectilesController = new ProjectilesController(this, keyH, collider);
     Thread gameThread;
     Menu menu = new Menu(this, keyH, mouseHandler);
-    
+
+    List<Opponent> opponents = new ArrayList<Opponent>();
+    Collider collider = new Collider();
+    ProjectilesController projectilesController = new ProjectilesController(this, keyH, collider);
     PlayerRed playerRed = new PlayerRed(this, keyH, projectilesController, collider);
     PlayerYellow playerYellow = new PlayerYellow(this, keyH, projectilesController, collider);
+    
     
     long opponentTimer = 0;
 
     int spaceBetweenBordersRatio = 7;
     int spaceBetweenBorders = screenWidth/spaceBetweenBordersRatio;
-    int idCounter = 2;
+    int idCounter = 3;
     
     enum GameState {
         MENU,
-        GAME
+        HELP,
+        GAME,
+        END
     }
 
     GameState gameState = GameState.MENU;
+    String winner = "";
 
+    void resetGame() {
+        opponents = new ArrayList<Opponent>();
+        collider = new Collider();
+        collider.gp = this;
+        projectilesController = new ProjectilesController(this, keyH, collider);
+        playerRed = new PlayerRed(this, keyH, projectilesController, collider);
+        playerYellow = new PlayerYellow(this, keyH, projectilesController, collider);
+    }
     
     public GamePanel(){
-        collider.gp = this;
+        resetGame();
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -52,9 +65,9 @@ public class GamePanel extends JPanel implements Runnable {
     void spawnOpponents(){
         if(opponentTimer>1000){
             System.out.println("P");
-            this.opponents.add(new Opponent(this, keyH, projectilesController, collider,idCounter));
+            this.opponents.add(new Opponent(this, keyH, projectilesController, collider, idCounter));
+            idCounter++;
             opponentTimer = 0;
-            idCounter+=1;
         }
         opponentTimer++;
         if(opponents.size() == 0){
@@ -69,7 +82,6 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-
     void opponentsUpdate(){
         int i =0;
         while(i<opponents.size()){
@@ -127,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update(){
         spaceBetweenBorders = this.getWidth()/spaceBetweenBordersRatio;
-        if (gameState == GameState.MENU) {
+        if (gameState == GameState.MENU || gameState == GameState.HELP || gameState == GameState.END) {
             menu.update();
         } else if (gameState == GameState.GAME) {
             playerRed.update();
@@ -145,11 +157,15 @@ public class GamePanel extends JPanel implements Runnable {
         menu.draw(g2);
         if (gameState == GameState.MENU) {
             menu.drawStartMenu(g2);
+        } else if (gameState == GameState.HELP) {
+            menu.drawHelpMenu(g2);
         } else if (gameState == GameState.GAME) {
             playerRed.draw(g2);
             playerYellow.draw(g2);
             opponentsDraw(g2);
             projectilesController.drawProjectiles(g2);
+        } else if (gameState == GameState.END) {
+            menu.drawEndScreen(g2);
         }
         g2.dispose();
     }
