@@ -24,6 +24,8 @@ public class Menu {
     KeyHandler keyH;
     MouseHandler mouseHandler;
     BufferedImage backgroundImage = null;
+    BufferedImage winnerImage = null;
+    BufferedImage helpMenuImage = null;
     int width = 300;
     int height = 250;
     double scaling = 1;
@@ -31,6 +33,7 @@ public class Menu {
     public Rectangle quitButton;
     public Rectangle helpButton;
     public Rectangle backButton;
+    public Rectangle menuBackground;
 
     public Menu(GamePanel gp, KeyHandler keyH, MouseHandler mouseHandler) {
         this.gp = gp;
@@ -42,6 +45,7 @@ public class Menu {
         try {
             // backgroundImage = ImageIO.read(new FileInputStream("templates/space.png"));
             backgroundImage = ImageIO.read(getClass().getResourceAsStream("/space.png"));
+            helpMenuImage = ImageIO.read(getClass().getResourceAsStream("/help_menu.png"));
             System.out.println("[INFO] Menu templates downloaded succesfuly");
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -59,7 +63,7 @@ public class Menu {
         int scaledButtonHeight = (int) (75 * scaling);
         int scaledBackButtonSize = (int) (50 * scaling);
 
-        startButton = new Rectangle(width / 3, height / 4 + scaledButtonOffsetY / 2,
+        startButton = new Rectangle(width / 3, height / 4 + (int) (scaledButtonOffsetY / 2.3),
             width / 3, scaledButtonHeight);
         quitButton = new Rectangle(width / 3, startButton.y + scaledButtonOffsetY,
             width / 3, scaledButtonHeight);
@@ -67,6 +71,7 @@ public class Menu {
             width / 3, scaledButtonHeight);
         backButton = new Rectangle(width / 4 + 1, height / 4 + 1,
             scaledBackButtonSize, scaledBackButtonSize);
+        menuBackground = new Rectangle(width / 4, height / 4, width / 2, height / 2);
 
         if (gp.gameState == GameState.MENU) {
             if (startButton.contains(mouseHandler.x, mouseHandler.y)) {
@@ -89,11 +94,15 @@ public class Menu {
     }
 
     void drawEndScreen(Graphics2D g2) {
-        g2.setColor(Color.white);
-        g2.fill(new Rectangle(width / 4, height / 4, width / 2, height / 2));
+        g2.setStroke(new BasicStroke(5f));
+        g2.setColor(Color.decode("#000080"));
+        g2.draw(menuBackground);
+        g2.setColor(Color.decode("#000033"));
+        g2.fill(menuBackground);
 
-        g2.setColor(Color.gray);
+        g2.setColor(Color.decode("#000080"));
         g2.draw(backButton);
+        g2.setColor(Color.decode("#000066"));
         g2.fill(backButton);
 
         int scaledTextOffsetX = backButton.width / 2 - (int) (20 * scaling);
@@ -102,18 +111,41 @@ public class Menu {
         g2.setColor(Color.white);
         g2.setFont(new Font("Arial", Font.BOLD, (int) (15 * scaling)));
         g2.drawString("Back", backButton.x + scaledTextOffsetX, backButton.y + scaledTextOffsetY);
+        
+        scaledTextOffsetX = -(int) ((75 + 5 * gp.winner.length()) * scaling);
+        scaledTextOffsetY = (int) (75 * scaling);
 
-        g2.setColor(Color.black);
         g2.setFont(new Font("Arial", Font.BOLD, (int) (40 * scaling)));
-        g2.drawString(gp.winner + " won", width / 2, height / 2);
+        g2.drawString(gp.winner + " won",
+            width / 2 + scaledTextOffsetX, height / 2 + scaledTextOffsetY);
+
+        if (gp.winner.equals("Yellow")) {
+            winnerImage = gp.playerYellow.playerSpirit;
+        } else {
+            winnerImage = gp.playerRed.playerSpirit;
+        }
+
+        int winnerWidth = (int) (winnerImage.getWidth() / 5 * scaling);
+        int winnerHeight = (int) (winnerImage.getHeight() / 5 * scaling);
+        int scaledImageOffsetY = (int) (winnerHeight / 3 * scaling);
+
+        g2.drawImage(winnerImage,
+            width / 2 - winnerWidth / 2, height / 2 - winnerHeight / 2 - scaledImageOffsetY,
+            winnerWidth, winnerHeight, null);
     }
 
     void drawHelpMenu(Graphics2D g2) {
-        g2.setColor(Color.white);
-        g2.fill(new Rectangle(width / 4, height / 4, width / 2, height / 2));
+        g2.setStroke(new BasicStroke(5f));
+        g2.setColor(Color.decode("#000080"));
+        g2.draw(menuBackground);
+        g2.setColor(Color.decode("#000033"));
+        g2.fill(menuBackground);
+        g2.drawImage(helpMenuImage, menuBackground.x, menuBackground.y,
+            menuBackground.width, menuBackground.height, null);
 
-        g2.setColor(Color.gray);
+        g2.setColor(Color.decode("#000080"));
         g2.draw(backButton);
+        g2.setColor(Color.decode("#000066"));
         g2.fill(backButton);
 
         int scaledTextOffsetX = backButton.width / 2 - (int) (20 * scaling);
@@ -125,15 +157,19 @@ public class Menu {
     }
 
     void drawStartMenu(Graphics2D g2) {
-        g2.setColor(Color.white);
-        g2.fill(new Rectangle(width / 4, height / 4, width / 2, height / 2));
+        g2.setStroke(new BasicStroke(5f));
+        g2.setColor(Color.decode("#000080"));
+        g2.draw(menuBackground);
+        g2.setColor(Color.decode("#000033"));
+        g2.fill(menuBackground);
 
-        g2.setColor(Color.gray);
+        g2.setColor(Color.decode("#000080"));
         g2.draw(startButton);
-        g2.fill(startButton);
         g2.draw(quitButton);
-        g2.fill(quitButton);
         g2.draw(helpButton);
+        g2.setColor(Color.decode("#000066"));
+        g2.fill(startButton);
+        g2.fill(quitButton);
         g2.fill(helpButton);
 
         int scaledTextOffsetX = startButton.width / 2 - (int) (40 * scaling);
