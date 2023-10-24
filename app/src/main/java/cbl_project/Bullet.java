@@ -82,14 +82,19 @@ public class Bullet {
             System.out.println("[ERROR] Image load failure!");
         }
     }
-    boolean insideMap(){
-        if(y< -100 || x <-100){
+
+    /**
+     * Checks if the bullet is inside the map.
+     * @return True or False depending on if the bullet is inside the map.
+     */
+    boolean insideMap() {
+        if (y < -100 || x < -100) {
             return false;
         }
-        if(x > gp.getWidth() + 100){
+        if (x > gp.getWidth() + 100) {
             return false;
         }
-        if( y > gp.getHeight() + 100){
+        if (y > gp.getHeight() + 100) {
             return false;
         }
         return true;

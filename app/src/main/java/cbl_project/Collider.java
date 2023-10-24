@@ -4,6 +4,9 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.List;
 
+/**
+ * The Collider class handles collisions between bullets, rockets and players.
+ */
 public class Collider {
     List<Bullet> bullets;
     List<RocketToYellow> rocketsToYellow;
@@ -14,10 +17,10 @@ public class Collider {
     RocketToYellow rocketToYellow;
 
     /**
-     * 
-     * @param playerRed
+     * Checks if bullets collide with the red player.
+     * @param playerRed The object PlayerRed.
      */
-    void checkBulletCoolision(PlayerRed playerRed) {
+    void checkBulletCollision(PlayerRed playerRed) {
         int i = 0;
         while (i < bullets.size()) {
             bullet = bullets.get(i);
@@ -39,10 +42,10 @@ public class Collider {
     }
 
     /**
-     * 
-     * @param playerYellow
+     * Checks if bullets collide with the yellow player.
+     * @param playerYellow The object PlayerYellow.
      */
-    void checkBulletCoolision(PlayerYellow playerYellow) {
+    void checkBulletCollision(PlayerYellow playerYellow) {
         int i = 0;
         while (i < bullets.size()) {
             bullet = bullets.get(i);
@@ -64,9 +67,9 @@ public class Collider {
     }
 
     /**
-     * 
+     * Checks if rockets collide with the red player.
      */
-    void checkRocketCoolisionRed() {
+    void checkRocketCollisionRed() {
         int i = 0;
         int dist = 0;
         while (i < rocketsToRed.size()) {
@@ -87,9 +90,9 @@ public class Collider {
     }
 
     /**
-     * 
+     * Checks if rockets collide with the yellow player.
      */
-    void checkRocketCoolisionYellow() {
+    void checkRocketCollisionYellow() {
         int i = 0;
         int dist = 0;
         while (i < rocketsToYellow.size()) {
@@ -110,10 +113,10 @@ public class Collider {
     }
 
     /**
-     * 
-     * @param opponent
+     * Checks if bullets collide with the opponent.
+     * @param opponent The opponent object.
      */
-    void checkOpponentBulletCollisioN(Opponent opponent){
+    void checkOpponentBulletCollision(Opponent opponent) {
         int i = 0;
         while (i < bullets.size()) {
             bullet = bullets.get(i);
@@ -123,11 +126,12 @@ public class Collider {
             }
             Rectangle bulletRectangle = new Rectangle(bullet.x, bullet.y,
                 bullet.width, bullet.height);
-            Rectangle playerRectangle = new Rectangle(opponent.x,opponent.y,opponent.width , opponent.height);
-            if(bulletRectangle.intersects(playerRectangle)){
+            Rectangle playerRectangle = new Rectangle(opponent.x, opponent.y,
+                opponent.width, opponent.height);
+            if (bulletRectangle.intersects(playerRectangle)) {
                 bullets.remove(i);
                 opponent.hp -= 10;
-                if(opponent.hp<=0){
+                if (opponent.hp <= 0) {
                     gp.deleteOpponent(opponent);
                     return;
                 }
@@ -136,24 +140,29 @@ public class Collider {
             i++;
         }
     }
-    void checkOpponentCoolisionRocketsToYellow(Opponent opponent){
-        int i =0;
+
+    /**
+     * Checks if the rockets shot by the opponent collides with the yellow player.
+     * @param opponent The opponent object.
+     */
+    void checkOpponentCollisionRocketsToYellow(Opponent opponent) {
+        int i = 0;
         int dist = 0;
-        while(i< rocketsToYellow.size()){
+        while (i < rocketsToYellow.size()) {
             rocketToYellow = rocketsToYellow.get(i);
-             if(rocketToYellow.ownerId == opponent.id){
+            if (rocketToYellow.ownerId == opponent.id) {
                 i++;
                 continue;
             }
             double x1 = rocketToYellow.x;
             double y1 = rocketToYellow.y;
-            double x2 = opponent.x + opponent.width/2;
-            double y2 = opponent.y + opponent.height/2;
-            dist = (int)Point2D.distance(x1,y1,x2,y2);
-            if(dist<rocketToYellow.rocketDetonationDist){
+            double x2 = opponent.x + opponent.width / 2;
+            double y2 = opponent.y + opponent.height / 2;
+            dist = (int) Point2D.distance(x1, y1, x2, y2);
+            if (dist < rocketToYellow.rocketDetonationDist) {
                 rocketsToYellow.remove(i);
                 opponent.hp -= 20;
-                if(opponent.hp<=0){
+                if (opponent.hp <= 0) {
                     gp.deleteOpponent(opponent);
                     return;
                 }
@@ -161,26 +170,30 @@ public class Collider {
             }
             i++;
         }
-
     }
-    void checkOpponentCoolisionRocketsToRed(Opponent opponent){
-        int i =0;
+
+    /**
+     * Checks if the rockets shot by the opponent collides with the red player.
+     * @param opponent The opponent object.
+     */
+    void checkOpponentCoolisionRocketsToRed(Opponent opponent) {
+        int i = 0;
         int dist = 0;
-        while(i< rocketsToRed.size()){
+        while (i < rocketsToRed.size()) {
             rocketToRed = rocketsToRed.get(i);
-            if(rocketToRed.ownerId == opponent.id){
+            if (rocketToRed.ownerId == opponent.id) {
                 i++;
                 continue;
             }
             double x1 = rocketToRed.x;
             double y1 = rocketToRed.y;
-            double x2 = opponent.x + opponent.width/2;
-            double y2 = opponent.y + opponent.height/2;
-            dist = (int)Point2D.distance(x1,y1,x2,y2);
-            if(dist<rocketToRed.rocketDetonationDist){
+            double x2 = opponent.x + opponent.width / 2;
+            double y2 = opponent.y + opponent.height / 2;
+            dist = (int) Point2D.distance(x1, y1, x2, y2);
+            if (dist < rocketToRed.rocketDetonationDist) {
                 rocketsToRed.remove(i);
                 opponent.hp -= 20;
-                if(opponent.hp<=0){
+                if (opponent.hp <= 0) {
                     gp.deleteOpponent(opponent);
                     return;
                 }
@@ -189,12 +202,14 @@ public class Collider {
             i++;
         }
     }
-    void checkOpponentCollision(Opponent opponent){
-        
-        checkOpponentBulletCollisioN(opponent);
+
+    /**
+     * Checks collisions for the specified opponent.
+     * @param opponent The opponent object.
+     */
+    void checkOpponentCollision(Opponent opponent) {
+        checkOpponentBulletCollision(opponent);
         checkOpponentCoolisionRocketsToRed(opponent);
-        checkOpponentCoolisionRocketsToYellow(opponent);
-        
-        
+        checkOpponentCollisionRocketsToYellow(opponent);
     }
 }

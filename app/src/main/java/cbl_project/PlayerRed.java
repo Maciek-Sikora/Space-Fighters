@@ -64,8 +64,8 @@ public class PlayerRed {
     }
 
     void checkColision() {
-        collider.checkBulletCoolision(this);
-        collider.checkRocketCoolisionRed();
+        collider.checkBulletCollision(this);
+        collider.checkRocketCollisionRed();
     }
 
     void movement() {
