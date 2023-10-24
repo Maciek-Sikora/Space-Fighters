@@ -78,7 +78,10 @@ public class Opponent {
     }
     void checkColision(){
         collider.checkOpponentCollision(this);
-        if(hp<=0) return;
+        if(hp<=0) {
+            gp.playSoundEffect(5);
+            return;
+        };
     }
     public static double getAngleOfLineBetweenTwoPoints(Point.Double p1, Point.Double p2)
     {
@@ -116,7 +119,10 @@ public class Opponent {
         movement();
         hpBar();
         checkColision();
-        if(hp<=0) return;
+        if(hp<=0) {
+            gp.playSoundEffect(5);
+            return;
+        };
 
         launchRockets();
         deleteChecker();
@@ -124,7 +130,10 @@ public class Opponent {
     }
 
     void draw(Graphics2D g2) {
-        if(hp<=0) return;
+        if(hp<=0) {
+            gp.playSoundEffect(5);
+            return;
+        };
         width = gp.getWidth() / 15;
         height = gp.getHeight() / 15;
         g2.drawImage(playerSpirit, x, y, width, height, null);

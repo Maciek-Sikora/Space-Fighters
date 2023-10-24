@@ -7,7 +7,7 @@ import javax.sound.sampled.Clip;
 
 public class Sound {
     Clip clip;
-    URL soundURL[] = new URL[5];
+    URL soundURL[] = new URL[6];
 
     public Sound(){
         soundURL[0] = getClass().getResource("/menu.wav");
@@ -15,6 +15,7 @@ public class Sound {
         soundURL[2] = getClass().getResource("/click.wav");
         soundURL[3] = getClass().getResource("/end.wav");
         soundURL[4] = getClass().getResource("/shoot.wav");
+        soundURL[5] = getClass().getResource("/destroy.wav");
     }
     public void setFile(int i){
         try{
