@@ -101,6 +101,8 @@ public class PlayerRed {
         movement();        
         if (hp < 0) {
             hp = 0;
+            gp.stopMusic();
+            gp.playMusic(3);
             gp.gameState = GameState.END;
             gp.winner = "Yellow";
         }

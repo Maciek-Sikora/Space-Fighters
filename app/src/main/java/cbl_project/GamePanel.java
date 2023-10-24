@@ -15,6 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
     
 
     int FPS = 60;
+    Sound sound = new Sound();
     KeyHandler keyH = new KeyHandler();
     MouseHandler mouseHandler = new MouseHandler();
     Thread gameThread;
@@ -94,7 +95,18 @@ public class GamePanel extends JPanel implements Runnable {
             opponent.draw(g2);
         }
     }
-
+    void playMusic(int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+    void stopMusic(){
+        sound.stop();
+    }
+    void playSoundEffect(int i){
+        sound.setFile(i);
+        sound.play();
+    }
 
     public void startGameThread(){
         gameThread = new Thread(this);
@@ -103,6 +115,7 @@ public class GamePanel extends JPanel implements Runnable {
     
     @Override
     public void run(){
+        playMusic(0);
         double drawInterval = 1e9 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();

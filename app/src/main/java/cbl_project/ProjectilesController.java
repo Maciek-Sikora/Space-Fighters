@@ -24,6 +24,7 @@ public class ProjectilesController {
     }
 
     void addBullet(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart, int ownerId) {
+        gp.playSoundEffect(4);
         bullets.add(new Bullet(gp, keyH, xStart, yStart, angleStart, ownerId));
     }
 
