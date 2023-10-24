@@ -152,8 +152,8 @@ public class Menu {
     }
 
     /**
-     * 
-     * @param g2
+     * Draws the help menu.
+     * @param g2 The graphics2D object that draws the image.
      */
     void drawHelpMenu(Graphics2D g2) {
         g2.setStroke(new BasicStroke(5f));
@@ -178,8 +178,8 @@ public class Menu {
     }
 
     /**
-     * 
-     * @param g2
+     * Draws the start menu.
+     * @param g2 The graphics2D object that draws the image.
      */
     void drawStartMenu(Graphics2D g2) {
         g2.setStroke(new BasicStroke(5f));
@@ -211,8 +211,8 @@ public class Menu {
     }
 
     /**
-     * 
-     * @param g2
+     * Draws the background of the game.
+     * @param g2 The graphics2D object that draws the image.
      */
     void draw(Graphics2D g2) {
         g2.drawImage(backgroundImage, 0, 0, width, height, null);

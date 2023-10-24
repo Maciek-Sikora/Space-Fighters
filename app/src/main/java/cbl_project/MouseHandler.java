@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * 
+ * Handles mouse inputs. Changes the x and y value when the mouse is pressed.
  */
 public class MouseHandler implements MouseListener {
     public int x;
