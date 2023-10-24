@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * 
+ * The Opponent class handles the incoming spaceships in the middle of the screen.
  */
 public class Opponent {
     GamePanel gp;
@@ -29,12 +29,12 @@ public class Opponent {
     int timer = 0;
 
     /**
-     * 
-     * @param gp
-     * @param keyH
-     * @param projectilesController
-     * @param collider
-     * @param id
+     * Initializes the opponent class.
+     * @param gp The gamepanel object.
+     * @param keyH The keyhandler.
+     * @param projectilesController The object that controls the projectiles.
+     * @param collider Collider object.
+     * @param id The ID of the opponent.
      */
     public Opponent(GamePanel gp, KeyHandler keyH,
         ProjectilesController projectilesController, Collider collider, int id) {
@@ -48,10 +48,10 @@ public class Opponent {
     }
 
     /**
-     * 
-     * @param img
-     * @param degrees
-     * @return
+     * Rotates an image.
+     * @param img The image
+     * @param degrees The degree by which the image has to be rotated.
+     * @return The rotated image.
      */
     public BufferedImage rotateImage(BufferedImage img, double degrees) {
         double theta = Math.toRadians(degrees);
@@ -64,7 +64,7 @@ public class Opponent {
     }
 
     /**
-     * 
+     * Reads the image files, prints error in case of an exception.
      */
     void setUp() {
         try {
@@ -79,7 +79,7 @@ public class Opponent {
     }
 
     /**
-     * 
+     * Handles the movement of the opponent.
      */
     void movement() {
         x = gp.getWidth() / 2 - width / 2;
@@ -87,7 +87,7 @@ public class Opponent {
     }
 
     /**
-     * 
+     * Changes the hp bar of the opponent depending on it's health.
      */
     void hpBar() {
         leftHpRectangle = new Rectangle(x, y + height + 5, width * hp / 40, height / 20);
@@ -96,7 +96,7 @@ public class Opponent {
     }
 
     /**
-     * 
+     * Checks if there are bullets or rockets that collide with the opponent.
      */
     void checkColision() {
         collider.checkOpponentCollision(this);
@@ -107,10 +107,10 @@ public class Opponent {
     }
 
     /**
-     * 
-     * @param p1
-     * @param p2
-     * @return
+     * Gets the angle between two points.
+     * @param p1 The first point.
+     * @param p2 The second point.
+     * @return The angle in degrees betwen the two points.
      */
     public static double getAngleOfLineBetweenTwoPoints(Point.Double p1, Point.Double p2) {
         double xDiff = p2.x - p1.x;
@@ -119,7 +119,7 @@ public class Opponent {
     }
 
     /**
-     * 
+     * Launches rockets towards the two players.
      */
     void launchRockets() {
         if (timer == 100) {
@@ -145,7 +145,7 @@ public class Opponent {
     }
 
     /**
-     * 
+     * Deletes the opponent if it goes outside the window.
      */
     void deleteChecker() {
         if (y >= gp.getHeight()) {
@@ -154,7 +154,7 @@ public class Opponent {
     }
 
     /**
-     * 
+     * Updates the opponent.
      */
     void update() {
         movement();
@@ -164,15 +164,13 @@ public class Opponent {
             gp.playSoundEffect(5);
             return;
         }
-
         launchRockets();
         deleteChecker();
-
     }
 
     /**
-     * 
-     * @param g2
+     * Draws the opponent and plays a sound effect if it gets destroyed.
+     * @param g2 The graphics2D object that draws the image.
      */
     void draw(Graphics2D g2) {
         if (hp <= 0) {
