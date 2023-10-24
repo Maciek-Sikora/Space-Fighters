@@ -98,6 +98,18 @@ public class RocketToRed {
             spiritCounter = 0;
         }
     }
+    boolean insideMap(){
+        if(y< -100 || x <-100){
+            return false;
+        }
+        if(x > gp.getWidth() + 100){
+            return false;
+        }
+        if( y > gp.getHeight() + 100){
+            return false;
+        }
+        return true;
+    }
 
     void draw(Graphics2D g2){
 

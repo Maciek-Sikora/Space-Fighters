@@ -37,8 +37,37 @@ public class ProjectilesController {
         gp.playSoundEffect(6);
         rocketsToRed.add(new RocketToRed(this.gp, this.keyH, xStart, yStart, angleStart, owner));
     }
+    void deleteProjectiles(){
+        int i =0;
+        while(i<bullets.size()){
+            if(!bullets.get(i).insideMap()){
+                bullets.remove(i);
+                continue;
+            }
+            i++;
+        }
 
+        i =0;
+        while(i<rocketsToRed.size()){
+            if(!rocketsToRed.get(i).insideMap()){
+                rocketsToRed.remove(i);
+                continue;
+            }
+            i++;
+        } 
+
+        i =0;
+        while(i<rocketsToYellow.size()){
+            if(!rocketsToYellow.get(i).insideMap()){
+                rocketsToYellow.remove(i);
+                continue;
+            }
+            i++;
+        } 
+    }
     void updateProjectiles() {
+        deleteProjectiles();
+        System.out.println(rocketsToRed.size());
         for (Bullet bullet : bullets) {
             bullet.update();
         }
