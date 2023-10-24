@@ -75,9 +75,8 @@ public class Menu {
 
         if (gp.gameState == GameState.MENU) {
             if (startButton.contains(mouseHandler.x, mouseHandler.y)) {
-                gp.stopMusic();
                 gp.playSoundEffect(2);
-                gp.playMusic(1);
+                gp.sound.playGameMusic();
                 gp.gameState = GameState.GAME;
             } else if (helpButton.contains(mouseHandler.x, mouseHandler.y)) {
                 gp.playSoundEffect(2);
@@ -93,8 +92,7 @@ public class Menu {
             }
         } else if (gp.gameState == GameState.END) {
             if (backButton.contains(mouseHandler.x, mouseHandler.y)) {
-                gp.stopMusic();
-                gp.playSoundEffect(2);
+                gp.sound.playMenuMusic();
                 gp.playMusic(0);
                 gp.gameState = GameState.MENU;
                 gp.resetGame();

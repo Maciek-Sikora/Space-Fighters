@@ -29,10 +29,12 @@ public class ProjectilesController {
     }
 
     void redLaunchRocket(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart, int owner) {
+        gp.playSoundEffect(6);
         rocketsToYellow.add(new RocketToYellow(gp, keyH, xStart, yStart, angleStart, owner));
     }
 
     void yellowLaunchRocket(GamePanel gp, KeyHandler keyH, int xStart, int yStart, int angleStart, int owner) {
+        gp.playSoundEffect(6);
         rocketsToRed.add(new RocketToRed(this.gp, this.keyH, xStart, yStart, angleStart, owner));
     }
 

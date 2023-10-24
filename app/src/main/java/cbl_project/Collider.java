@@ -68,6 +68,7 @@ public class Collider {
             dist = (int)Point2D.distance(x1,y1,x2,y2);
             if(dist<rocketToRed.rocketDetonationDist){
                 rocketsToRed.remove(i);
+                gp.playSoundEffect(5);
                 gp.playerRed.hp -= 10;
                 continue;
             }
@@ -87,6 +88,7 @@ public class Collider {
             dist = (int)Point2D.distance(x1,y1,x2,y2);
             if(dist<rocketToYellow.rocketDetonationDist){
                 rocketsToYellow.remove(i);
+                gp.playSoundEffect(5);
                 gp.playerYellow.hp -= 10;
                 continue;
             }

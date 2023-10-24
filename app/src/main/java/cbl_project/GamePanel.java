@@ -115,7 +115,7 @@ public class GamePanel extends JPanel implements Runnable {
     
     @Override
     public void run(){
-        playMusic(0);
+        sound.playMenuMusic();
         double drawInterval = 1e9 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
