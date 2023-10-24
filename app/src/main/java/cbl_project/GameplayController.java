@@ -1,14 +1,17 @@
 package cbl_project;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
+/**
+ * The class controls the window of the game.
+ */
 public class GameplayController {
     public static JFrame window;
 
-    void startGame(){
+    /**
+     * Sets the window properties and starts the game.
+     */
+    void startGame() {
         window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(true);
@@ -27,6 +30,4 @@ public class GameplayController {
 
         gamePanel.startGameThread();
     }
-
-    
 }
