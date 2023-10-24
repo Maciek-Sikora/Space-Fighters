@@ -59,7 +59,7 @@ public class RocketToRed {
 
 
 
-            System.out.println("[INFO] Rocket templates downloaded succesfuly");
+            System.out.println("[INFO] Rockets templates downloaded succesfuly");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

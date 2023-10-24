@@ -1,5 +1,8 @@
 package cbl_project;
 
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 /**
@@ -14,10 +17,16 @@ public class GameplayController {
     void startGame() {
         window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(true);
+        window.setResizable(false);
         
         window.setTitle("Space fighters");
+        try{
+            BufferedImage icon = ImageIO.read(getClass().getResourceAsStream("/spaceship_red.png"));
+            window.setIconImage(icon);
+            System.out.println("[INFO] Icon templates downloaded succesfuly");
+        }catch(Exception e){}
         
+
         window.setLocationByPlatform(true);
 
 

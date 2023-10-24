@@ -74,7 +74,6 @@ public class GamePanel extends JPanel implements Runnable {
      */
     void spawnOpponents() {
         if (opponentTimer > 1000) {
-            System.out.println("P");
             this.opponents.add(
                 new Opponent(this, keyH, projectilesController, collider, idCounter));
             idCounter++;
