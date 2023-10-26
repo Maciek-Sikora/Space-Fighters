@@ -1,16 +1,22 @@
 package cbl_project;
-import java.net.URL;
 
+import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+/**
+ * The class handles the sound of the game.
+ */
 public class Sound {
     Clip clip;
     Clip background;
-    URL soundURL[] = new URL[7];
+    URL[] soundURL = new URL[7];
 
-    public Sound(){
+    /**
+     * Reads the sound files.
+     */
+    public Sound() {
         soundURL[0] = getClass().getResource("/menu.wav");
         soundURL[1] = getClass().getResource("/background.wav");
         soundURL[2] = getClass().getResource("/click.wav");
@@ -19,62 +25,91 @@ public class Sound {
         soundURL[5] = getClass().getResource("/destroy.wav");
         soundURL[6] = getClass().getResource("/launch.wav");
     }
-    void playMenuMusic(){
-        try{
+
+    /**
+     * Plays the menu music when the menu is open.
+     */
+    void playMenuMusic() {
+        try {
             background.stop();
-        } catch (Exception e){}
-        try{
+        } catch (Exception e) {
+            return;
+        }
+        try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[0]);
             background = AudioSystem.getClip();
             background.open(ais);
-        } catch (Exception e){
-
+        } catch (Exception e) {
+            return;
         }
         background.start();
         background.loop(Clip.LOOP_CONTINUOUSLY);
     }
-    void playGameMusic(){
+
+    /**
+     * Plays the game music during the match.
+     */
+    void playGameMusic() {
         background.stop();
-        try{
+        try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[1]);
             background = AudioSystem.getClip();
             background.open(ais);
-        } catch (Exception e){
-
+        } catch (Exception e) {
+            return;
         }
         background.start();
         background.loop(Clip.LOOP_CONTINUOUSLY);
     }
-    void playEndMusic(){
+
+    /**
+     * Plays the end music after a player wins.
+     */
+    void playEndMusic() {
         background.stop();
-        try{
+        try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[3]);
             background = AudioSystem.getClip();
             background.open(ais);
-        } catch (Exception e){
-
+        } catch (Exception e) {
+            return;
         }
         background.start();
         background.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-
-    public void setFile(int i){
-        try{
+    /**
+     * Sets the music to be played depending on the specified index.
+     * @param i The index of the music file.
+     */
+    public void setFile(int i) {
+        try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
-        }catch(Exception e){
-
+        } catch (Exception e) {
+            return;
         }
     }
-    public void play(){
+
+    /**
+     * Plays the selected sound.
+     */
+    public void play() {
         clip.start();
     }
-    public void loop(){
+    
+    /**
+     * Loops the selected sound.
+     */
+    public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
-    public void stop(){
+
+    /**
+     * Stops the selected sound.
+     */
+    public void stop() {
         clip.stop();
     }
 }
