@@ -1,19 +1,19 @@
 package cbl_project;
 
-import javax.imageio.ImageIO;
 
 import cbl_project.GamePanel.GameState;
-
+import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.IOException;
-
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.awt.Rectangle;
-import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
+/**
+ * The PlayerRed class handles the spaceship on the left side of the screen (Red player).
+ */
 public class PlayerRed {
 
     GamePanel gp;
@@ -32,7 +32,15 @@ public class PlayerRed {
     Rectangle leftHpRectangle = new Rectangle();
     Rectangle rightHpRectangle = new Rectangle();
 
-    public PlayerRed(GamePanel gp, KeyHandler keyH, ProjectilesController projectilesController, Collider collider) {
+    /**
+     * Initializes the PlayerRed class.
+     * @param gp The gamepanel object.
+     * @param keyH The keyhandler.
+     * @param projectilesController The object that controls the projectiles.
+     * @param collider Collider object.
+     */
+    public PlayerRed(GamePanel gp, KeyHandler keyH,
+        ProjectilesController projectilesController, Collider collider) {
         this.gp = gp;
         this.keyH = keyH;
         this.projectilesController = projectilesController;
@@ -40,6 +48,12 @@ public class PlayerRed {
         setUp();
     }
 
+    /**
+     * Rotates an image.
+     * @param img The image
+     * @param degrees The degree by which the image has to be rotated.
+     * @return The rotated image.
+     */
     public BufferedImage rotateImage(BufferedImage img, double degrees) {
         double theta = Math.toRadians(degrees);
 
@@ -50,6 +64,9 @@ public class PlayerRed {
         return op.filter(img, null);
     }
 
+    /**
+     * Reads the image files, prints error in case of an exception.
+    */
     void setUp() {
         try {
             playerSpirit = ImageIO.read(getClass().getResourceAsStream("/spaceship_red.png"));
@@ -57,17 +74,22 @@ public class PlayerRed {
 
             System.out.println("[INFO] Player templates downloaded succesfuly");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             System.out.println("[ERROR] Image load failure!");
         }
     }
-
+    
+    /**
+     * Checks if any bullet or rocket is coliding with the spaceship.
+     */
     void checkColision() {
         collider.checkBulletCollision(this);
         collider.checkRocketCollisionRed();
     }
 
+    /**
+     * Handles the movement of the player. There is also bullet and missile launch bind.
+     */
     void movement() {
         if (keyH.w && y - speed >= 0) {
             y -= speed;
@@ -92,11 +114,18 @@ public class PlayerRed {
         }
     }
 
+    /**
+     * Makes an HP bar below the player.
+     */
     void hpBar() {
         leftHpRectangle = new Rectangle(x, y + height + 5, width * hp / 100, height / 20);
-        rightHpRectangle = new Rectangle(x + width * hp / 100, y + height + 5, width - (width * hp / 100), height / 20);
+        rightHpRectangle = new Rectangle(x + width * hp / 100, y + height + 5, 
+        width - (width * hp / 100), height / 20);
     }
 
+    /**
+     * Updates the player. Change the gamestate after death.
+     */
     void update() {
         movement();        
         if (hp < 0) {
@@ -108,7 +137,11 @@ public class PlayerRed {
         hpBar();
         checkColision();
     }
-
+    
+    /**
+     * Draws the player and HP bar.
+     * @param g2 The graphics2D object that draws the image.
+     */
     void draw(Graphics2D g2) {
         width = gp.getWidth() / 15;
         height = gp.getHeight() / 15;
