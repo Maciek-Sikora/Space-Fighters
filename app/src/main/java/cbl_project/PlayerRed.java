@@ -130,6 +130,7 @@ public class PlayerRed {
         movement();        
         if (hp < 0) {
             hp = 0;
+            gp.stopMusic();
             gp.sound.playEndMusic();
             gp.gameState = GameState.END;
             gp.winner = "Yellow";
@@ -137,7 +138,7 @@ public class PlayerRed {
         hpBar();
         checkColision();
     }
-    
+
     /**
      * Draws the player and HP bar.
      * @param g2 The graphics2D object that draws the image.

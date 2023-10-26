@@ -33,14 +33,14 @@ public class Sound {
         try {
             background.stop();
         } catch (Exception e) {
-            return;
+            ;
         }
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[0]);
             background = AudioSystem.getClip();
             background.open(ais);
         } catch (Exception e) {
-            return;
+            ;
         }
         background.start();
         background.loop(Clip.LOOP_CONTINUOUSLY);
@@ -56,7 +56,7 @@ public class Sound {
             background = AudioSystem.getClip();
             background.open(ais);
         } catch (Exception e) {
-            return;
+            ;
         }
         background.start();
         background.loop(Clip.LOOP_CONTINUOUSLY);
@@ -72,7 +72,7 @@ public class Sound {
             background = AudioSystem.getClip();
             background.open(ais);
         } catch (Exception e) {
-            return;
+            ;
         }
         background.start();
         background.loop(Clip.LOOP_CONTINUOUSLY);
@@ -88,7 +88,7 @@ public class Sound {
             clip = AudioSystem.getClip();
             clip.open(ais);
         } catch (Exception e) {
-            return;
+            ;
         }
     }
 

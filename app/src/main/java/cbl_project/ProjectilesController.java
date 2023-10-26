@@ -13,6 +13,9 @@ public class ProjectilesController {
     GamePanel gp;
     KeyHandler keyH;
     Collider collider;
+    int yellowBullets;
+    int redBullets;
+
     /**
      * Initializes the ProjectilesController class.
      * @param gp The gamepanel object.
@@ -40,8 +43,26 @@ public class ProjectilesController {
      */
     void addBullet(GamePanel gp, KeyHandler keyH, int xStart, int yStart, 
         int angleStart, int ownerId) {
-        gp.playSoundEffect(4);
-        bullets.add(new Bullet(gp, keyH, xStart, yStart, angleStart, ownerId));
+        switch (ownerId) {
+            case 1:
+                if (redBullets > 8) return;
+                gp.playSoundEffect(4);
+                bullets.add(new Bullet(gp, keyH, xStart, yStart, angleStart, ownerId));
+                redBullets++;
+                break;
+            case 2:
+                if(yellowBullets > 8) return;
+                gp.playSoundEffect(4);
+                bullets.add(new Bullet(gp, keyH, xStart, yStart, angleStart, ownerId));
+                yellowBullets++;
+                break;
+            default:
+                gp.playSoundEffect(4);
+                bullets.add(new Bullet(gp, keyH, xStart, yStart, angleStart, ownerId));
+                break;
+        }
+        
+        
     }
 
     /**
@@ -55,6 +76,9 @@ public class ProjectilesController {
      */
     void redLaunchRocket(GamePanel gp, KeyHandler keyH, int xStart, 
         int yStart, int angleStart, int owner) {
+        if(rocketsToYellow.size() > 2){
+            return;
+        }
         gp.playSoundEffect(6);
         rocketsToYellow.add(new RocketToYellow(gp, keyH, xStart, yStart, angleStart, owner));
     }
@@ -70,6 +94,9 @@ public class ProjectilesController {
      */
     void yellowLaunchRocket(GamePanel gp, KeyHandler keyH, 
         int xStart, int yStart, int angleStart, int owner) {
+        if(rocketsToRed.size() > 2) {
+            return;
+        }
         gp.playSoundEffect(6);
         rocketsToRed.add(new RocketToRed(this.gp, this.keyH, xStart, yStart, angleStart, owner));
     }
@@ -80,7 +107,13 @@ public class ProjectilesController {
     void deleteProjectiles(){
         int i = 0;
         while (i < bullets.size()) {
-            if (!bullets.get(i).insideMap()) {
+            Bullet bullet = bullets.get(i);
+            if (!bullet.insideMap()) {
+                if (bullet.ownerId == 1) {
+                    redBullets--;
+                } else if (bullet.ownerId == 2) {
+                    yellowBullets--;
+                }
                 bullets.remove(i);
                 continue;
             }

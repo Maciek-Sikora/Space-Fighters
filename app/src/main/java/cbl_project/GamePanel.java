@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     long opponentTimer = 0;
     int spaceBetweenBordersRatio = 7;
     int spaceBetweenBorders = screenWidth / spaceBetweenBordersRatio;
-    int idCounter = 3;
+    int idCounter = 4;
     
     enum GameState {
         MENU,
@@ -133,7 +133,10 @@ public class GamePanel extends JPanel implements Runnable {
      * Stops the music.
      */
     void stopMusic() {
-        sound.stop();
+        for (int i = 0; i < 5; i++) {
+            sound.stop();
+        }
+        
     }
 
     /**

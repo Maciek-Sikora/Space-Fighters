@@ -1,17 +1,14 @@
 package cbl_project;
 
-import javax.imageio.ImageIO;
-
 import cbl_project.GamePanel.GameState;
-
+import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.awt.Rectangle;
-import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  * The PlayerYellow class handles the spaceship on the right side of the screen (Yellow player).
@@ -134,6 +131,7 @@ public class PlayerYellow {
         movement();
         if (hp < 0) {
             hp = 0;
+            gp.stopMusic();
             gp.sound.playEndMusic();
             gp.gameState = GameState.END;
             gp.winner = "Red";
@@ -141,7 +139,7 @@ public class PlayerYellow {
         hpBar();
         checkColision();
     }
-    
+
     /**
      * Draws the player and HP bar.
      * @param g2 The graphics2D object that draws the image.
