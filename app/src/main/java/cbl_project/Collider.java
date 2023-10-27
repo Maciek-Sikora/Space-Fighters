@@ -82,7 +82,7 @@ public class Collider {
             if (dist < rocketToRed.rocketDetonationDist) {
                 rocketsToRed.remove(i);
                 gp.playSoundEffect(5);
-                gp.playerRed.hp -= 10;
+                gp.playerRed.hp -= 11;
                 continue;
             }
             i++;
@@ -105,7 +105,7 @@ public class Collider {
             if (dist < rocketToYellow.rocketDetonationDist) {
                 rocketsToYellow.remove(i);
                 gp.playSoundEffect(5);
-                gp.playerYellow.hp -= 10;
+                gp.playerYellow.hp -= 11;
                 continue;
             }
             i++;
@@ -130,7 +130,7 @@ public class Collider {
                 opponent.width, opponent.height);
             if (bulletRectangle.intersects(playerRectangle)) {
                 bullets.remove(i);
-                opponent.hp -= 10;
+                opponent.hp -= 11;
                 if (opponent.hp <= 0) {
                     gp.deleteOpponent(opponent);
                     return;
@@ -161,7 +161,7 @@ public class Collider {
             dist = (int) Point2D.distance(x1, y1, x2, y2);
             if (dist < rocketToYellow.rocketDetonationDist) {
                 rocketsToYellow.remove(i);
-                opponent.hp -= 20;
+                opponent.hp -= 21;
                 if (opponent.hp <= 0) {
                     gp.deleteOpponent(opponent);
                     return;
@@ -192,7 +192,7 @@ public class Collider {
             dist = (int) Point2D.distance(x1, y1, x2, y2);
             if (dist < rocketToRed.rocketDetonationDist) {
                 rocketsToRed.remove(i);
-                opponent.hp -= 20;
+                opponent.hp -= 21;
                 if (opponent.hp <= 0) {
                     gp.deleteOpponent(opponent);
                     return;
