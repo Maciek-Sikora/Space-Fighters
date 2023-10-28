@@ -60,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
      */
     public GamePanel() {
         resetGame();
+        sound.playMenuMusic();
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -120,26 +121,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     * Plays the specified music file.
-     * @param i The index of the music file that is to be played.
-     */
-    void playMusic(int i) {
-        sound.setFile(i);
-        sound.play();
-        sound.loop();
-    }
-
-    /**
-     * Stops the music.
-     */
-    void stopMusic() {
-        for (int i = 0; i < 5; i++) {
-            sound.stop();
-        }
-        
-    }
-
-    /**
      * Plays the specified sound effect.
      * @param i The index of the sound effect.
      */
@@ -158,7 +139,6 @@ public class GamePanel extends JPanel implements Runnable {
     
     @Override
     public void run() {
-        sound.playMenuMusic();
         double drawInterval = 1e9 / fps;
         double delta = 0;
         long lastTime = System.nanoTime();

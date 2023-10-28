@@ -99,7 +99,6 @@ public class Menu {
         } else if (gp.gameState == GameState.END) {
             if (backButton.contains(mouseHandler.x, mouseHandler.y)) {
                 gp.sound.playMenuMusic();
-                gp.playMusic(0);
                 gp.gameState = GameState.MENU;
                 gp.resetGame();
             }

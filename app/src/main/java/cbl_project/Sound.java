@@ -30,10 +30,8 @@ public class Sound {
      * Plays the menu music when the menu is open.
      */
     void playMenuMusic() {
-        try {
+        if (background != null) {
             background.stop();
-        } catch (Exception e) {
-            ;
         }
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[0]);
@@ -42,7 +40,6 @@ public class Sound {
         } catch (Exception e) {
             ;
         }
-        background.start();
         background.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
@@ -58,7 +55,6 @@ public class Sound {
         } catch (Exception e) {
             ;
         }
-        background.start();
         background.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
@@ -74,7 +70,6 @@ public class Sound {
         } catch (Exception e) {
             ;
         }
-        background.start();
         background.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
