@@ -123,8 +123,8 @@ public class Opponent {
      */
     void launchRockets() {
         if (timer == 100) {
-            projectilesController.addBullet(gp, keyH, x, y, 90, id);
-            projectilesController.addBullet(gp, keyH, x, y, 270, id);
+            projectilesController.addBullet(gp, keyH, x, y + height/2, 270, id);
+            projectilesController.addBullet(gp, keyH, x + width, y + height/2, 90, id);
         }
 
         if (timer == 200) {
