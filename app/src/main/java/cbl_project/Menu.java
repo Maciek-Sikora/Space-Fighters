@@ -23,11 +23,11 @@ public class Menu {
     int width = 300;
     int height = 250;
     double scaling = 1;
-    public Rectangle startButton;
-    public Rectangle quitButton;
-    public Rectangle helpButton;
-    public Rectangle backButton;
-    public Rectangle menuBackground;
+    Rectangle startButton = new Rectangle();
+    Rectangle quitButton = new Rectangle();
+    Rectangle helpButton = new Rectangle();
+    Rectangle backButton = new Rectangle();
+    Rectangle menuBackground = new Rectangle();
 
     /**
      * Initializes the menu class.
@@ -47,7 +47,6 @@ public class Menu {
      */
     void setUp() {
         try {
-            // backgroundImage = ImageIO.read(new FileInputStream("templates/space.png"));
             backgroundImage = ImageIO.read(getClass().getResourceAsStream("/space.png"));
             helpMenuImage = ImageIO.read(getClass().getResourceAsStream("/help_menu.png"));
             System.out.println("[INFO] Menu templates downloaded succesfuly");
@@ -215,7 +214,7 @@ public class Menu {
      */
     void draw(Graphics2D g2) {
         g2.drawImage(backgroundImage, 0, 0, width, height, null);
-        // Boarder
+        // Border
         g2.setStroke(new BasicStroke(20f));
         g2.drawLine(width / 2 - gp.spaceBetweenBorders, 0,
             width / 2 - gp.spaceBetweenBorders, height);
