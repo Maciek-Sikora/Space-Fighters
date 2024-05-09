@@ -11,7 +11,11 @@
 ## Demo:
 
 
-https://github.com/Maciek-Sikora/Space-Fighters/assets/43787380/4fd93f0f-18ba-4c4a-aaf7-0e30c96c63db
+
+
+https://github.com/Maciek-Sikora/Space-Fighters/assets/43787380/08ac8df8-aa4d-4e0f-80fb-0c33e1760a55
+
+
 
 
 ## How to run the project?
